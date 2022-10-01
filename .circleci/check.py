@@ -24,9 +24,8 @@ def get_pipeline_id_list(target_revision):
     except requests.exceptions.RequestException as e:
         raise e
 
-def get_workflow_id_list(pipeline_id_list):
-    # TODO
-    url = "https://circleci.com/api/v2/pipeline/{0}/workflow".format(pipeline_id_list[0])
+def get_workflow_id(pipeline_id):
+    url = "https://circleci.com/api/v2/pipeline/{0}/workflow".format(pipeline_id)
     headers = {"Circle-Token": os.getenv("CIRCLE_TOKEN")}
 
     try:
@@ -58,10 +57,12 @@ def main():
 
     dotenv.load_dotenv()
 
+    # TODO: ここに {ワークフロー名:Bool} の辞書を宣言したい
     pipeline_id_list = get_pipeline_id_list(target_revision=revision)
-    workflow_id_list = get_workflow_id_list(pipeline_id_list=pipeline_id_list)
-    for a in workflow_id_list:
-        print(get_workflow_name(a))
+    for pipeline_id in pipeline_id_list:
+        workflow_id_list = get_workflow_id(pipeline_id=pipeline_id)
+        for workflow_id in workflow_id_list:
+            print(get_workflow_name(workflow_id))
 
 if __name__ == "__main__":
     main()
