@@ -19,8 +19,8 @@ jobs:
       - image: cimg/python:3.10.7
     steps:
       - checkout
-      - pip install -r requirements.txt
-      - python check.py <<pipeline.git.revision>>
+      - run: pip install -r requirements.txt
+      - run: python check.py <<pipeline.git.revision>>
   ios-ci:
     executor: cimg-base
     steps:
