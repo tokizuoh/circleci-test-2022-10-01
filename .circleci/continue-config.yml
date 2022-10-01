@@ -32,6 +32,9 @@ jobs:
       - checkout
       - run: echo "Android"
 workflows:
+  status-check-workflow:
+    jobs:
+      - status-check
   ios-workflow:
     when: << pipeline.parameters.build-ios >>
     jobs:
