@@ -18,6 +18,8 @@ jobs:
     executor: cimg-base
     steps:
       - checkout
+      - run: echo <<pipeline.git.revision>>
+      - run: circleci step halt
       - run: echo "iOS"
   android-ci:
     executor: cimg-base
