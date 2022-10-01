@@ -68,7 +68,6 @@ def main():
     for pipeline_id in pipeline_id_list:
         workflow_id_list = get_workflow_id(pipeline_id=pipeline_id)
         for workflow_id in workflow_id_list:
-            # TODO: Aの真偽値をtrueにする
             workflow_name = get_workflow_name(workflow_id)
             if workflow_name in TODO_d:
                 TODO_d[workflow_name] = True
