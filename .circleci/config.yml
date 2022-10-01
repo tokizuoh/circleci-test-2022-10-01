@@ -8,6 +8,8 @@ orbs:
 workflows:
   generate-config:
     jobs:
+      - run: echo <<pipeline.git.revision>>
+      - run: circleci step halt
       - path-filtering/filter:
           base-revision: main
           config-path: .circleci/continue-config.yml
