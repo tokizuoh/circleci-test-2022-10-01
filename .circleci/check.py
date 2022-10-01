@@ -58,7 +58,7 @@ def main():
 
     dotenv.load_dotenv()
 
-    pipeline_id_list = get_pipeline_id_list(revision)
+    pipeline_id_list = get_pipeline_id_list(target_revision=revision)
     workflow_id_list = get_workflow_id_list(pipeline_id_list=pipeline_id_list)
     for a in workflow_id_list:
         print(get_workflow_name(a))
