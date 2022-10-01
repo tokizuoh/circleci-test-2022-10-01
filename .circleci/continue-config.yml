@@ -20,7 +20,7 @@ jobs:
     steps:
       - checkout
       - run: pip install -r requirements.txt
-      - run: python check.py <<pipeline.git.revision>>
+      - run: python .circleci/check.py <<pipeline.git.revision>>
   ios-ci:
     executor: cimg-base
     steps:
