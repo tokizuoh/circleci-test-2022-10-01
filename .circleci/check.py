@@ -62,7 +62,7 @@ def main():
 
     dotenv.load_dotenv()
 
-    # TODO: ここに {ワークフロー名:Bool} の辞書を宣言したい ... A
+    # TODO: ここに {ワークフロー名:Bool} の辞書を動的に宣言したい ... A
     TODO_d = {"ios-workflow": False, "android-workflow": False}
     pipeline_id_list = get_pipeline_id_list(target_revision=revision)
     for pipeline_id in pipeline_id_list:
