@@ -1,0 +1,16 @@
+version: '2.1'
+
+setup: true
+
+orbs:
+  path-filtering: circleci/path-filtering@0.1.3
+
+workflows:
+  generate-config:
+    jobs:
+      - path-filtering/filter:
+          base-revision: main
+          config-path: .circleci/continue-config.yml
+          mapping: |
+            ios/.* build-ios true
+            android/.* build-android true

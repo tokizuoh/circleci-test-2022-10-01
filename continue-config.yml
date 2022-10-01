@@ -1,0 +1,35 @@
+version: 2.1
+
+executors:
+  cimg-base:
+    docker:
+      - image: cimg/base:stable
+
+parameters:
+  build-ios:
+    type: boolean
+    default: false
+  build-android:
+    type: boolean
+    default: false
+
+jobs:
+  ios-ci:
+    executor: cimg-base
+    steps:
+      - checkout
+      - run: echo "iOS"
+  android-ci:
+    executor: cimg-base
+    steps:
+      - checkout
+      - run: echo "Android"
+workflows:
+  ios-workflow:
+    when: << pipeline.parameters.build-ios >>
+    jobs:
+      - ios-ci
+  android-workflow:
+    when: << pipeline.parameters.build-android >>
+    jobs:
+      - android-ci
