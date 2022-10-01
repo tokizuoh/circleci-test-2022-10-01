@@ -32,8 +32,13 @@ def get_workflow_id(pipeline_id):
         res = requests.get(url, headers=headers)
         res.raise_for_status()
         res_dict = res.json()
-        workflow_id_list = list(map(lambda item: item['id'], res_dict["items"]))
-        return workflow_id_list
+        workflow_id_list = list(
+            map(
+                lambda item: item['id'] if item['status'] == 'success' else None,
+                res_dict["items"]
+            )
+        )
+        return [workflow_id for workflow_id in workflow_id_list if workflow_id != None ]
     except requests.exceptions.RequestException as e:
         raise e
 
@@ -57,12 +62,26 @@ def main():
 
     dotenv.load_dotenv()
 
-    # TODO: ここに {ワークフロー名:Bool} の辞書を宣言したい
+    # TODO: ここに {ワークフロー名:Bool} の辞書を宣言したい ... A
+    TODO_d = {"ios-workflow": False, "android-workflow": False}
     pipeline_id_list = get_pipeline_id_list(target_revision=revision)
     for pipeline_id in pipeline_id_list:
         workflow_id_list = get_workflow_id(pipeline_id=pipeline_id)
         for workflow_id in workflow_id_list:
-            print(get_workflow_name(workflow_id))
+            # TODO: Aの真偽値をtrueにする
+            workflow_name = get_workflow_name(workflow_id)
+            if workflow_name in TODO_d:
+                TODO_d[workflow_name] = True
+    
+    successed_workflow_names = []
+    for k, v in TODO_d.items():
+        if v == True:
+            successed_workflow_names.append(k)
+
+    if len(successed_workflow_names) > 0:
+        print("exists successed workflow:", successed_workflow_names)
+    else:
+        sys.exit("error. all specified workflows have failed.")
 
 if __name__ == "__main__":
     main()
