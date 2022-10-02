@@ -14,7 +14,6 @@ def get_pipeline_id_list(target_revision):
         res = requests.get(url, headers=headers)
         res.raise_for_status()
         res_dict = res.json()
-
         pipeline_id_list = list(
             map(
                 lambda item: item['id'] if item['vcs']['revision'] == target_revision else None,
