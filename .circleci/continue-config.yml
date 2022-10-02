@@ -14,13 +14,13 @@ parameters:
     default: false
 
 jobs:
-  status-check:
+  check-workflow-status:
     docker:
       - image: cimg/python:3.10.7
     steps:
       - checkout
       - run: pip install -r requirements.txt
-      - run: python .circleci/check.py <<pipeline.git.revision>>
+      - run: python .circleci/check-workflow-status.py <<pipeline.git.revision>>
   ios-ci:
     executor: cimg-base
     steps:
@@ -32,9 +32,9 @@ jobs:
       - checkout
       - run: echo "Android"
 workflows:
-  status-check-workflow:
+  check-workflow-status-workflow:
     jobs:
-      - status-check
+      - check-workflow-status
   ios-workflow:
     when: << pipeline.parameters.build-ios >>
     jobs:
