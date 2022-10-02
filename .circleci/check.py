@@ -4,6 +4,7 @@ import pprint
 import requests
 import sys
 
+# https://circleci.com/docs/api/v2/index.html#operation/listPipelines
 def get_pipeline_id_list(target_revision):
     org_slug = os.getenv("ORG_SLUG")
     url = "https://circleci.com/api/v2/pipeline?org-slug={0}&mine={1}".format(org_slug, "true")
@@ -24,6 +25,7 @@ def get_pipeline_id_list(target_revision):
     except requests.exceptions.RequestException as e:
         raise e
 
+# https://circleci.com/docs/api/v2/index.html#operation/getPipelineById
 def get_workflow_id(pipeline_id):
     url = "https://circleci.com/api/v2/pipeline/{0}/workflow".format(pipeline_id)
     headers = {"Circle-Token": os.getenv("CIRCLE_TOKEN")}
@@ -42,6 +44,7 @@ def get_workflow_id(pipeline_id):
     except requests.exceptions.RequestException as e:
         raise e
 
+# https://circleci.com/docs/api/v2/index.html#operation/getWorkflowById
 def get_workflow_name(id):
     url = "https://circleci.com/api/v2/workflow/{0}".format(id)
     headers = {"Circle-Token": os.getenv("CIRCLE_TOKEN")}
