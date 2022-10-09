@@ -14,7 +14,7 @@ parameters:
     default: false
 
 jobs:
-  check-workflow-status:
+  workflow-status-check:
     docker:
       - image: cimg/python:3.10.7
     steps:
@@ -32,9 +32,9 @@ jobs:
       - checkout
       - run: echo "Android"
 workflows:
-  check-workflow-status-workflow:
+  workflow-status-checks-workflow:
     jobs:
-      - check-workflow-status
+      - workflow-status-check
   ios-workflow:
     when: << pipeline.parameters.build-ios >>
     jobs:
