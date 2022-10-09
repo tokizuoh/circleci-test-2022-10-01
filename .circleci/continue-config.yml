@@ -49,8 +49,12 @@ workflows:
     jobs:
       - ios-ci
       - rerun-workflow-status-checks-workflow
+          requires:
+            ios-ci
   android-workflow:
     when: << pipeline.parameters.build-android >>
     jobs:
       - android-ci
       - rerun-workflow-status-checks-workflow
+          requires:
+            android-ci
