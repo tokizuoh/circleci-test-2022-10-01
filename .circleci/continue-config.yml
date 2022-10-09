@@ -4,6 +4,9 @@ executors:
   cimg-base:
     docker:
       - image: cimg/base:stable
+  python:
+    docker:
+      - image: cimg/python:3.10.7
 
 parameters:
   build-ios:
@@ -15,12 +18,17 @@ parameters:
 
 jobs:
   workflow-status-check:
-    docker:
-      - image: cimg/python:3.10.7
+    executor: python
     steps:
       - checkout
       - run: pip install -r requirements.txt
       - run: python .circleci/check-workflow-status.py <<pipeline.git.revision>>
+  rerun-workflow-status-checks-workflow:
+    executor: python
+    steps:
+      - checkout
+      - run: pip install -r requirements.txt
+      - run: python3 .circleci/rerun-workflow.py <<pipeline.git.revision>>
   ios-ci:
     executor: cimg-base
     steps:
@@ -40,7 +48,9 @@ workflows:
     when: << pipeline.parameters.build-ios >>
     jobs:
       - ios-ci
+      - rerun-workflow-status-checks-workflow
   android-workflow:
     when: << pipeline.parameters.build-android >>
     jobs:
       - android-ci
+      - rerun-workflow-status-checks-workflow
