@@ -84,7 +84,7 @@ def main():
     if len(successed_workflow_names) > 0:
         print("exists successed workflow:", successed_workflow_names)
     else:
-        sys.exit("error. all specified workflows have failed.")
+        sys.exit("error. all of the specified workflows have a status other than Success.")
 
 if __name__ == "__main__":
     main()
