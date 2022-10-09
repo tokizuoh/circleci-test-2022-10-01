@@ -6,6 +6,9 @@ executors:
       - image: cimg/base:stable
 
 parameters:
+  check-workflow-status:
+    type: boolean
+    default: false
   build-ios:
     type: boolean
     default: false
@@ -33,6 +36,7 @@ jobs:
       - run: echo "Android"
 workflows:
   workflow-status-checks-workflow:
+    when: << pipeline.parameters.check-workflow-status >>
     jobs:
       - workflow-status-check
   ios-workflow:
