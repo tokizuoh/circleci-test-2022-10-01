@@ -49,8 +49,8 @@ jobs:
 workflows:
   workflow-status-checks-workflow:
     jobs:
-      - workflow-status-check
-          build-ios: "<< pipeline.parameters.build-ios >>"
+      - workflow-status-check:
+          build-ios: << pipeline.parameters.build-ios >>
   ios-workflow:
     when: << pipeline.parameters.build-ios >>
     jobs:
