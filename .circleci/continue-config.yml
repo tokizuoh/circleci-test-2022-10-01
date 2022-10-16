@@ -18,9 +18,15 @@ parameters:
 
 jobs:
   workflow-status-check:
+    paremeters:
+      parameters:
+        build-ios:
+          type: boolean
+          default: false
     executor: python
     steps:
       - checkout
+      - run: echo "<< pipeline.parameters.build-ios >>"
       - run: pip install -r requirements.txt
       - run: python .circleci/check-workflow-status.py <<pipeline.git.revision>>
   rerun-workflow-status-checks-workflow:
@@ -44,6 +50,7 @@ workflows:
   workflow-status-checks-workflow:
     jobs:
       - workflow-status-check
+          build-ios: << pipeline.parameters.build-ios >>
   ios-workflow:
     when: << pipeline.parameters.build-ios >>
     jobs:
