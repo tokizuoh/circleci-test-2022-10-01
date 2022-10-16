@@ -18,11 +18,10 @@ parameters:
 
 jobs:
   workflow-status-check:
-    paremeters:
-      parameters:
-        build-ios:
-          type: boolean
-          default: false
+    parameters:
+      build-ios:
+        type: boolean
+        default: false
     executor: python
     steps:
       - checkout
