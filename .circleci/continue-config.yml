@@ -29,13 +29,13 @@ jobs:
       - checkout
       - run: pip install -r requirements.txt
       - run: python3 .circleci/rerun-workflow.py <<pipeline.git.revision>>
-  ios-ci:
+  ios-test-job:
     executor: cimg-base
     steps:
       - checkout
       - run: sleep 60
       - run: echo "iOS"
-  android-ci:
+  android-test-job:
     executor: cimg-base
     steps:
       - checkout
@@ -47,14 +47,14 @@ workflows:
   ios-workflow:
     when: << pipeline.parameters.build-ios >>
     jobs:
-      - ios-ci
+      - ios-test-job
       - rerun-workflow-status-checks-workflow:
           requires:
-            - ios-ci
+            - ios-test-job
   android-workflow:
     when: << pipeline.parameters.build-android >>
     jobs:
-      - android-ci
+      - android-test-job
       - rerun-workflow-status-checks-workflow:
           requires:
-            - android-ci
+            - android-test-job
