@@ -17,7 +17,7 @@ parameters:
     default: false
 
 jobs:
-  workflow-status-check:
+  workflow-status-check-job:
     executor: python
     steps:
       - checkout
@@ -43,7 +43,7 @@ jobs:
 workflows:
   workflow-status-checks-workflow:
     jobs:
-      - workflow-status-check
+      - workflow-status-check-job
   ios-workflow:
     when: << pipeline.parameters.build-ios >>
     jobs:
