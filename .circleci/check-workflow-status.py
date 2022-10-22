@@ -24,8 +24,8 @@ def get_pipeline_id_list(target_revision):
     except requests.exceptions.RequestException as e:
         raise e
 
-# https://circleci.com/docs/api/v2/index.html#operation/getPipelineById
-def get_workflow_id(pipeline_id):
+# https://circleci.com/docs/api/v2/index.html#operation/listWorkflowsByPipelineId
+def get_workflow_id_list(pipeline_id):
     url = "https://circleci.com/api/v2/pipeline/{0}/workflow".format(pipeline_id)
     headers = {"Circle-Token": os.getenv("CIRCLE_TOKEN")}
 
@@ -70,7 +70,7 @@ def main():
     }
     pipeline_id_list = get_pipeline_id_list(target_revision=revision)
     for pipeline_id in pipeline_id_list:
-        workflow_id_list = get_workflow_id(pipeline_id=pipeline_id)
+        workflow_id_list = get_workflow_id_list(pipeline_id=pipeline_id)
         for workflow_id in workflow_id_list:
             workflow_name = get_workflow_name(workflow_id)
             if workflow_name in workflows:
