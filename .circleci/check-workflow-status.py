@@ -81,6 +81,7 @@ def main():
         if v == True:
             successed_workflow_names.append(k)
 
+    # TODO: パイプラインで実際にpath-filteringに引っかかったワークフローが存在しているか？を判定させる
     if len(successed_workflow_names) > 0:
         print("exists successed workflow:", successed_workflow_names)
     else:
